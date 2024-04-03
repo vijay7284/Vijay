@@ -1,0 +1,54 @@
+pipeline {
+
+    agent any
+
+    stages {
+
+        stage('Checkout') {
+
+            steps {
+
+                // Checkout the repository from GitHub
+
+checkout scmGit(branches: [[name: '*/TerraformJ']], extensions: [], userRemoteConfigs: [[credentialsId: 'vijay7284', url: 'https://github.com/vijay7284/Vijay.git']])
+            }
+
+        }
+
+        stage('Terraform Init') {
+
+            steps {
+
+                sh 'terraform init'
+
+            }
+
+        }
+
+        stage('Terraform Plan') {
+
+            steps {
+
+                // Generate Terraform plan
+
+                sh 'terraform plan'
+
+            }
+
+        }
+
+        stage('Terraform Apply') {
+
+            steps {
+
+                // Apply Terraform changes
+
+                sh 'terraform apply -auto-approve'
+
+            }
+
+        }
+
+    }
+
+}
